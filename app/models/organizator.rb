@@ -1,0 +1,2 @@
+class Organizator < Player 
+end

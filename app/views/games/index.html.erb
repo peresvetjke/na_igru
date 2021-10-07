@@ -1,0 +1,10 @@
+<h2>Games list</h2>
+<%= link_to 'New game', new_game_path %> <br>
+<table>
+  <th>Location</th>
+  <th>Starting time</th>
+  <th>Organizator</th>
+  <th>Players amount</th>
+  <th>Comment</th>
+  <%= render @games %>
+</table>

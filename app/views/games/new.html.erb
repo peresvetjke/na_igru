@@ -1,0 +1,9 @@
+<h2>Create new game</h2>
+<%= form_with model: @game, url: games_path, method: "post" do |form| %>
+  <%= form.label :location %>
+  <%= form.collection_select "game[location_id]", Location.order(:title), :id, :title %> <br>
+  <%= form.label :starting_time %>
+  <%= form.datetime_select :starting_time, order: [:day, :month, :year] %> <br>
+  <%= form.submit %>
+<% end %>
+<%= link_to 'Back to games', games_path %>
