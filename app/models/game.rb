@@ -3,5 +3,5 @@ class Game < ApplicationRecord
   belongs_to :location
   
   has_many :game_players
-  has_many :players, through: :game_players
+  has_many :players_assigned, through: :game_players, source: :player
 end

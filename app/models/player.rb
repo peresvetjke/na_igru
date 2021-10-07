@@ -8,8 +8,7 @@ class Player < ApplicationRecord
           :rememberable, 
           :validatable
   
-  has_many :games, foreign_key: "organizator_id"
-  # has_many :game_players        
-  # has_many :games, through: :game_players
-
+  has_many :games_organized, class_name: "Game", foreign_key: "organizator_id"
+  has_many :game_players
+  has_many :games_played, through: :game_players, source: :game
 end
