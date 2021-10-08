@@ -1,0 +1,13 @@
+<div class="mb-3">
+  <%= form.label "title", "Title", class: 'form-label' %>
+  <%= form.text_field "title", class: 'form-control', value: location.title %>
+</div>
+<div class="mb-3">
+  <%= form.label "default_min_players", "Min. players", class: 'form-label' %>
+  <%= form.number_field "default_min_players", in: 2..22, step: 1, class: 'form-control', value: location.default_min_players %>
+</div>
+<div class="mb-3">
+  <%= form.label "default_max_players", "Max. players", class: 'form-label' %>
+  <%= form.number_field "default_max_players", in: 2..50, step: 1, class: 'form-control', value: location.default_max_players %>
+</div>
+  <%= form.submit %>

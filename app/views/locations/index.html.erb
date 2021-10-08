@@ -1,0 +1,8 @@
+<h2>Locations list</h2>
+<%= link_to 'New location', new_location_path %> <br>
+<table class="table">
+  <th>Title</th>
+  <th colspan="2">Players amount default (max / min)</th>
+  <th colspan="3">Actions</th>
+  <%= render @locations %>
+</table>

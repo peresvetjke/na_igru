@@ -1,0 +1,5 @@
+<h2>Show location</h2>
+<p>Title: <%= @location.title %></p>
+<p>Min. players amount (default): <%= @location.default_min_players || '-' %></p>
+<p>Max. players amount (default): <%= @location.default_max_players || '-' %></p>
+<%= link_to 'Back to locations', locations_path %>

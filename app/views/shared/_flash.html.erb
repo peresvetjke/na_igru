@@ -1,2 +1,6 @@
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
+<% if flash[:notice].present? %>
+<div class="alert alert-primary"><p class="notice"><%= notice %></p></div>
+<% end %>
+<% if flash[:alert].present? %>
+<div class="alert alert-primary"><p class="alert"><%= alert %></p></div>
+<% end %>

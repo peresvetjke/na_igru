@@ -1,4 +1,8 @@
 <h2>Show game</h2>
-<p>Location: <%= @game.location.title %></p>
-<p>Starting time: <%= @game.starting_time %></p>
+<p>Location: <%= @game.location.title || 'none' %></p>
+<p>Starting time: <%= @game.starting_time || 'none' %></p>
+<p>End time: <%= @game.end_time || 'none' %></p>
+<p>Players: <%= @game.players_assigned.count %></p>
+<p>(Min. players: <%= @game.min_players || 'none' %>; Max. players: <%= @game.max_players || 'none' %>)</p>
+<%= link_to 'Show line up', game_game_players_path(@game) %>
 <%= link_to 'Back to games', games_path %>

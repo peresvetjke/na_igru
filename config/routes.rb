@@ -6,5 +6,8 @@ Rails.application.routes.draw do
   
   devise_for :players, skip: :all
 
-  resources :games, :players
+  resources :players, :locations
+  resources :games do
+    resources :game_players, shallow: true
+  end
 end

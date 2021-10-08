@@ -23,7 +23,7 @@ organizator = Player.first
     game.save!
 
     6.times do |g_p|
-      game.players.push(Player.find(g_p+1))
+      game.players_assigned.push(Player.find(g_p+1))
     end
   end
 end

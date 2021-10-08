@@ -1,0 +1,21 @@
+<div class="mb-3">
+  <%= form.label "location_id", "Location", class: 'form-label' %><br>
+  <%= form.collection_select "location_id", Location.order(:title), :id, :title, class: 'form-control', value: game.location_id %>
+</div>
+<div class="mb-3">
+  <%= form.label "starting_time", class: 'form-label' %><br>
+  <%= form.datetime_select "starting_time", order: [:day, :month, :year], class: 'form-control', default: {year: game.starting_time&.year || Time.now.localtime.year, month: game.starting_time&.month || Time.now.localtime.month, day: game.starting_time&.day || Time.now.localtime.day, hour: game.starting_time&.hour || 21, min: game.starting_time&.min || 0} %>
+</div>
+<div class="mb-3">
+  <%= form.label "end_time", class: 'form-label' %><br>
+  <%= form.datetime_select "end_time", order: [:day, :month, :year], class: 'form-control', default: {year: game.end_time&.year || Time.now.localtime.year, month: game.end_time&.month || Time.now.localtime.month, day: game.end_time&.day || Time.now.localtime.day, hour: game.end_time&.hour || 21, min: game.end_time&.min || 0} %>
+</div>
+<div class="mb-3">
+  <%= form.label "min_players", "Min. players", class: 'form-label' %>
+  <%= form.number_field "min_players", in: 2..50, step: 1, class: 'form-control', value: game.location&.default_min_players || 10 %>
+</div>
+<div class="mb-3">
+  <%= form.label "max_players", "Max. players", class: 'form-label' %>
+  <%= form.number_field "max_players", in: 2..50, step: 1, class: 'form-control', value: game.location&.default_max_players || 14 %>
+</div>
+  <%= form.submit %>

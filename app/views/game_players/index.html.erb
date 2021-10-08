@@ -1,0 +1,13 @@
+<h2>Players list for game #<%= @game.id %> by <%= @game.organizator.email %></h2>
+<% if @game_players.present? %>
+  <table class="table"> 
+    <th>Email</th>
+    <th>Actions</th>
+  <% @game_players.each do |player| %>
+  <tr>
+    <td><%= player.email %></td>
+    <td><%= link_to 'Remove player', game_player_path(player), action: "delete", data: {confirm: "Are you sure?"} %></td>
+  </tr>
+  <% end %>
+  </table>
+<% end %>

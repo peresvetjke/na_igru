@@ -1,0 +1,8 @@
+<h2>Create new location</h2>
+
+<%= render partial: 'shared/errors', locals: {resource: @location} %>
+<%= form_with model: @location, url: {action: "create"} do |form| %>
+<%= render partial: 'form', locals: {form: form, location: @location} %>
+<% end %>
+
+<p class="mt-5"><%= link_to 'Back to locations', locations_path %> </p>

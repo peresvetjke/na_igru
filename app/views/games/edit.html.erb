@@ -1,6 +1,6 @@
-<h2>Create new game</h2>
+<h2>Edit game</h2>
 
-<%= form_with model: @game, url: {action: "create"} do |form| %>
+<%= form_with model: @game, url: {action: "update"} do |form| %>
 <%= render partial: 'form', locals: {form: form, game: @game} %>
 <% end %>
 
