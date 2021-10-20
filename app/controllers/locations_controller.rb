@@ -29,7 +29,7 @@ class LocationsController < ApplicationController
 
   def update
     if @location.update(location_params)
-      redirect_to @location
+      redirect_to locations_path
     else
       render :edit
     end

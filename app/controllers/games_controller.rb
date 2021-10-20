@@ -1,20 +1,12 @@
 class GamesController < ApplicationController
   before_action :find_game, only: %i[show edit update destroy check_in check_out]
 
-
-  def check_in
-    @game.players_assigned.push(current_player)
-  end
-
-  def check_out
-    @game.players_assigned.delete(current_player)
-  end
-
   def index
     @games = Game.all
   end
 
   def show
+    @game_players = GamePlayer.where(game: @game)
   end
 
   def new

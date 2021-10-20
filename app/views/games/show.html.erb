@@ -1,8 +1,38 @@
+<% if @game_player&.errors.present? %>
+<%= render 'shared/errors', resource: @game_player %>
+<% end %>
+
 <h2>Show game</h2>
 <p>Location: <%= @game.location.title || 'none' %></p>
 <p>Starting time: <%= @game.starting_time || 'none' %></p>
 <p>End time: <%= @game.end_time || 'none' %></p>
 <p>Players: <%= @game.players_assigned.count %></p>
+<p>Organizator: <%= @game.organizator.email %></p>
 <p>(Min. players: <%= @game.min_players || 'none' %>; Max. players: <%= @game.max_players || 'none' %>)</p>
+
+<h2>Players list</h2>
+
+<div class="mb-3">
+<%= form_with model: @game_player, url: game_game_players_path(@game) do |f| %>
+<%= f.collection_select :id, Player.order(:email), :id, :email, prompt: 'Select' %>
+<%= f.submit 'Add player' %>
+<% end %>
+</div>
+
+<% if @game_players.present? %>
+  <table class="table"> 
+    <th>Email</th>
+    <th>Actions</th>
+  <% @game_players.each do |game_player| %>
+  <tr>
+    <td><%= game_player.player.email %></td>
+    <td><%= link_to 'Remove player', game_player_path(game_player), method: :delete, data: {confirm: "Are you sure?"} %></td>
+  </tr>
+  <% end %>
+  </table>
+<% end %>
+
+
+
 <%= link_to 'Show line up', game_game_players_path(@game) %>
 <%= link_to 'Back to games', games_path %>

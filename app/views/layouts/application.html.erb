@@ -14,13 +14,13 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-    <div class="container">
-    <div class="row justify-content-md-center">
-
-   <%= render 'shared/flash' %>
-    <%= yield %>
-    </div>
+  <body style="background-color:  #f2f2f2;">
+    <%= render 'shared/nav' %>
+    <div class="container" style="background-color: #ffffff;">
+      <div class="row justify-content-md-center" style="border: 2px solid lightgray;border-radius: 8px;padding: 5px;">
+      <%= render 'shared/flash' %>
+      <%= yield %>
+      </div>
     </div>
 
     <!-- Optional JavaScript; choose one of the two! -->
