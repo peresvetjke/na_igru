@@ -1,19 +1,20 @@
-<%= form_with model:  @location, 
-              url:    location_path(location), 
-              local:  true, 
-              class:  'form-inline',
-              data:   { location_id: location.id },
-              method: :patch do |form| %>
-    
-    <br><br>
+<br><br>
 
-<tr>
-  <td><%= form.text_field location.title == '' ? "title" : "location[title]", value: location.title %></td>
-  <td><%= form.number_field location.default_min_players == '' ? "default_min_players" : "location[default_min_players]", value: location.default_min_players %></td>
-  <td><%= form.number_field location.default_max_players == '' ? "default_max_players" : "location[default_max_players]", value: location.default_max_players %></td>
-  <td><%= link_to 'Show', location_path(location) %></td>
-  <td><%= link_to 'Edit', edit_location_path(location) %><%= form.submit 'Save' %></td>
-  <td><%= link_to 'Delete', location_path(location), method: "delete", data: {confirm: "Are you sure?"} %></td>
-</tr>
+<%= content_tag :tr, class: "form-inline-row-edit hide", data: {location_id: location.id} do %>
+  <%= form_with model:  @location, 
+            url:    update_inline_location_path(location), 
+            local:  true, 
+            class:  'form-inline',
+            data:   { location_id: location.id },
+            method: :patch do |form| %>
+
+    <td><%= form.text_field location.title == '' ? "title" : "location[title]", value: location.title %></td>
+    <td><%= form.number_field location.default_min_players == '' ? "default_min_players" : "location[default_min_players]", value: location.default_min_players %></td>
+    <td><%= form.number_field location.default_max_players == '' ? "default_max_players" : "location[default_max_players]", value: location.default_max_players %></td>
+    <td><%= link_to 'Cancel', {}, data: {location_id: location.id}, class: 'form-inline-cancel' %></td>
+    <td><%= form.submit 'Save', data: {location_id: location.id}, class: 'form-inline-save' %></td>
+    <td></td>
+  <% end %>
 
 <% end %>
+

@@ -1,8 +1,9 @@
 class LocationsController < ApplicationController
-  before_action :find_location, only: %i[show edit update destroy]
+  before_action :find_location, only: %i[show edit update update_inline destroy]
+  before_action :set_locations, only: %i[index update_inline]
 
   def index
-    @locations = Location.all
+    
   end
 
   def show
@@ -35,6 +36,14 @@ class LocationsController < ApplicationController
     end
   end
 
+  def update_inline
+    if @location.update(location_params)
+      redirect_to locations_path
+    else
+      render :index
+    end
+  end
+
   def destroy
     @location.destroy
     flash[:notice] = "Location has been destroyed."
@@ -48,6 +57,9 @@ class LocationsController < ApplicationController
     @location = Location.find(params[:id])
   end
 
+  def set_locations
+    @locations = Location.all
+  end
   def location_params
     params.require(:location).permit(:title, :default_min_players, :default_max_players)
   end
