@@ -19,20 +19,23 @@
 <% end %>
 </div>
 
-<% if @game_players.present? %>
   <table class="table"> 
     <th>Email</th>
     <th>Actions</th>
+<% if @game_players.present? %>
   <% @game_players.each do |game_player| %>
   <tr>
     <td><%= game_player.player.email %></td>
     <td><%= link_to 'Remove player', game_player_path(game_player), method: :delete, data: {confirm: "Are you sure?"} %></td>
   </tr>
   <% end %>
-  </table>
+<% else %>
+<tr>
+  <td>No players yet</td>
+  <td></td>
+</tr>
 <% end %>
+  </table>
 
 
-
-<%= link_to 'Show line up', game_game_players_path(@game) %>
 <%= link_to 'Back to games', games_path %>

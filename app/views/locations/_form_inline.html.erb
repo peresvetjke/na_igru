@@ -1,6 +1,6 @@
 <br><br>
 
-<%= content_tag :tr, class: "form-inline-row-edit hide", data: {location_id: location.id} do %>
+<%= content_tag :tr, class: "form-inline-row-edit hide", data: {resource_id: location.id} do %>
   <%= form_with model:  @location, 
             url:    update_inline_location_path(location), 
             local:  true, 

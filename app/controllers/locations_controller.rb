@@ -37,6 +37,7 @@ class LocationsController < ApplicationController
   end
 
   def update_inline
+    byebug
     if @location.update(location_params)
       redirect_to locations_path
     else
