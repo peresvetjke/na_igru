@@ -13,6 +13,7 @@ import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 import "../../assets/utilities/filter.js"
 import "../../assets/utilities/form_inline.js"
+import "../../assets/utilities/select_all.js"
 
 global.$ = require('jquery')//, require('jquery-ui'), require('jquery-blockui')
 Rails.start()

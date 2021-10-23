@@ -31,8 +31,11 @@ class GamesController < ApplicationController
 
   def update
     if @game.update(game_params)
-      @game.starting_time = Time.zone.local(params[:game]['starting_time(1i)'].to_i, params[:game]['starting_time(2i)'].to_i, params[:game]['starting_time(3i)'].to_i, params[:game]['starting_time(4i)'].to_i, params[:game]['starting_time(5i)'].to_i)
-      @game.end_time = Time.zone.local(params[:game]['end_time(1i)'].to_i, params[:game]['end_time(2i)'].to_i, params[:game]['end_time(3i)'].to_i, params[:game]['end_time(4i)'].to_i, params[:game]['end_time(5i)'].to_i)
+      if params[:game]['starting_time(1i)'].present?
+        @game.starting_time = Time.zone.local(params[:game]['starting_time(1i)'].to_i, params[:game]['starting_time(2i)'].to_i, params[:game]['starting_time(3i)'].to_i, params[:game]['starting_time(4i)'].to_i, params[:game]['starting_time(5i)'].to_i)
+        @game.end_time = Time.zone.local(params[:game]['end_time(1i)'].to_i, params[:game]['end_time(2i)'].to_i, params[:game]['end_time(3i)'].to_i, params[:game]['end_time(4i)'].to_i, params[:game]['end_time(5i)'].to_i)
+      end
+
       @game.save
 
       redirect_to @game
@@ -55,6 +58,6 @@ class GamesController < ApplicationController
   end
 
   def game_params
-    params.require(:game).permit(:location_id, :min_players, :max_players, starting_time: [], end_time: [])
+    params.require(:game).permit(:location_id, :min_players, :max_players, :passed, starting_time: [], end_time: [])
   end
 end

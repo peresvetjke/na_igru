@@ -3,39 +3,29 @@
 <% end %>
 
 <h2>Show game</h2>
-<p>Location: <%= @game.location.title || 'none' %></p>
-<p>Starting time: <%= @game.starting_time || 'none' %></p>
-<p>End time: <%= @game.end_time || 'none' %></p>
-<p>Players: <%= @game.players_assigned.count %></p>
-<p>Organizator: <%= @game.organizator.email %></p>
-<p>(Min. players: <%= @game.min_players || 'none' %>; Max. players: <%= @game.max_players || 'none' %>)</p>
 
-<h2>Players list</h2>
+  <p><strong>Status: </strong><span style="color: <%= status_text_color(@game)%>;"><%= status(@game) %></span></p>
+    <% if @game.passed.nil? %>
+      <div class="alert alert-warning" role="alert">
+        <p>Waiting for status update:</p>
+      <%= form_with url: game_path(@game), model: @game, method: :patch do |f| %>
+      <%= f.label :passed, "Game passed as planned?" %>
+      <%= f.check_box :passed %><br>
+      <%= f.submit 'Save' %>
+      <% end %>
+      </div>
+    <% end %>
+  <p>Location: <%= @game.location.title || 'none' %></p>
+  <p>Starting time: <%= @game.starting_time || 'none' %></p>
+  <p>End time: <%= @game.end_time || 'none' %></p>
+  <p>Players: <%= @game.players_assigned.count %></p>
+  <p>Organizator: <%= @game.organizator.email %></p>
+  <p>(Min. players: <%= @game.min_players || 'none' %>; Max. players: <%= @game.max_players || 'none' %>)</p>
 
-<div class="mb-3">
-<%= form_with model: @game_player, url: game_game_players_path(@game) do |f| %>
-<%= f.collection_select :id, Player.order(:email), :id, :email, prompt: 'Select' %>
-<%= f.submit 'Add player' %>
+<% if @game.passed.nil? %>
+<%= render 'show_players_list' %>
+<% elsif @game.passed %>
+<%= render 'update_players_list' %>
 <% end %>
-</div>
-
-  <table class="table"> 
-    <th>Email</th>
-    <th>Actions</th>
-<% if @game_players.present? %>
-  <% @game_players.each do |game_player| %>
-  <tr>
-    <td><%= game_player.player.email %></td>
-    <td><%= link_to 'Remove player', game_player_path(game_player), method: :delete, data: {confirm: "Are you sure?"} %></td>
-  </tr>
-  <% end %>
-<% else %>
-<tr>
-  <td>No players yet</td>
-  <td></td>
-</tr>
-<% end %>
-  </table>
-
 
 <%= link_to 'Back to games', games_path %>

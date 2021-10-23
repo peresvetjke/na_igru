@@ -1,0 +1,48 @@
+<h2>Players list</h2>
+
+<% if @game.passed.nil? %>
+  <div class="mb-3">
+  <%= form_with model: @game_player, url: game_game_players_path(@game) do |f| %>
+  <%= f.collection_select :id, Player.order(:email), :id, :email, prompt: 'Select' %>
+  <%= f.submit 'Add player' %>
+  <% end %>
+  </div>
+<% end %>
+
+<form>
+  <label for="attended">All attended?</label>
+  <input id="attended" class="check_box_all" type="checkbox">
+  <label for="paid">All paid?</label>
+  <input id="paid" class="check_box_all" type="checkbox">
+</form>
+
+<div class="alert alert-warning" role="alert">
+  <p>Please mark player info and press 'submit'</p>
+  <%= form_with url: game_path(@game), model: @game, method: :patch do |f| %>
+  <%= f.submit 'Submit' %>
+</div>
+
+
+<table class="table"> 
+  <th>Email</th>
+  <th colspan="2">Actions</th>
+
+    <% @game_players.each do |game_player| %>
+
+    <tr>
+      <td><%= game_player.player.email %></td>
+      <td>
+        <%= f.label :attended %>
+        <%= f.check_box :attended, data: {resource_id: game_player.id}, class: "check_box_resource attended" %><br>
+      </td>
+      <td>
+        <%= f.label :paid %>
+        <%= f.check_box :paid, data: {resource_id: game_player.id}, class: "check_box_resource paid" %><br>
+      </td>
+    </tr>
+      
+    <% end %>
+
+<% end %>
+
+  </table>
