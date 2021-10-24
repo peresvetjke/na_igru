@@ -1,6 +1,6 @@
 <% if resource&.errors.present? %>
 
-  <%= content_tag :div, data: {resource_id: resource.id}, class: "errors" do %>
+  <%= content_tag :div, data: {id: resource.id}, class: "errors" do %>
     <% resource.errors.full_messages.each do |message| %>
     <div class="alert alert-danger"> <p><%= message %></p> </div>
     <% end %>

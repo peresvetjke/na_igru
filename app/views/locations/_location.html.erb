@@ -1,9 +1,9 @@
-<%= content_tag :tr, class: "form-inline-row-current", data: {resource_id: location.id} do %>
+<%= content_tag :tr, class: "form-inline-row-current", data: {id: location.id} do %>
   <td><%= location.title %></td>
   <td><%= location.default_min_players || '-' %></td>
   <td><%= location.default_max_players || '-' %></td>
   <td><%= link_to 'Show', location_path(location) %></td>
-  <td><%= button_to 'Edit', edit_location_path(location), class: "form-inline-edit", data: {resource_id: location.id} %></td>
+  <td><%= button_to 'Edit', edit_location_path(location), class: "form-inline-edit", data: {id: location.id} %></td>
   <td><%= button_to 'Delete', location_path(location), method: "delete", data: {confirm: "Are you sure?"} %></td>
 <% end %>
 
