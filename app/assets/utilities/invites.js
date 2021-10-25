@@ -1,8 +1,8 @@
 import Rails from '@rails/ujs';
 
 document.addEventListener("turbolinks:load", () => {
-  var controls = $(".ajax.notifications");
-
+  var controls = $(".ajax.invites");
+  console.log('Got the control')
   for (var i = 0; i < controls.length; i++) {
     controls[i].addEventListener('click', multipleActionHadler)
   }
@@ -10,6 +10,7 @@ document.addEventListener("turbolinks:load", () => {
 })
 
 function multipleActionHadler() {
+  console.log('Feel thrill!')
   event.preventDefault();
   
   var parentResourceId = $(this).attr('data-id');
@@ -35,8 +36,8 @@ function extractIds(checkboxType) {
 function sendMarkAsReadRequest(parentResourceId, ids) {
 
   $.ajax({
-  type: "PATCH",
-  url: `/players/${parentResourceId}/notifications/mark_as_read`,
+  type: "POST",
+  url: `/games/${parentResourceId}/invites/send_multiple`,
   data: { ids: ids },
   statusCode: {
   404: function() {

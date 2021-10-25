@@ -2,6 +2,10 @@
 <%= render 'shared/errors', resource: @game_player %>
 <% end %>
 
+<% if @invite&.errors.present? %>
+<%= render 'shared/errors', resource: @invite %>
+<% end %>
+
 <h2>Show game</h2>
 
   <p><strong>Status: </strong><span style="color: <%= status_text_color(@game)%>;"><%= status(@game) %></span></p>
@@ -23,9 +27,9 @@
   <p>(Min. players: <%= @game.min_players || 'none' %>; Max. players: <%= @game.max_players || 'none' %>)</p>
 
 <% if @game.passed.nil? %>
-<%= render 'show_players_list' %>
+<%= render 'games/show_players_list' %>
 <% elsif @game.passed %>
-<%= render 'update_players_list' %>
+<%= render 'games/update_players_list' %>
 <% end %>
 
 <%= link_to 'Back to games', games_path %>

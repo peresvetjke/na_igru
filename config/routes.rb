@@ -4,11 +4,15 @@ Rails.application.routes.draw do
 
   root to: "games#index"
   
+  devise_scope :player do
+    get "/sign_in" => "devise/sessions#new" # custom path to login/sign_in
+    get "/sign_up" => "devise/registrations#new", as: "new_user_registration" # custom path to sign_up/registration
+    delete "/sign_out" => "devise/sessions#destroy"
+  end
+
   devise_for :players, skip: :all
 
-  resources :players, shallow: true do
-    resources :invites
-  end
+  resources :players, shallow: true
 
   resources :notifications, only: :index do
       get   :unviewed, on: :collection
@@ -20,6 +24,9 @@ Rails.application.routes.draw do
   end
 
   resources :games, shallow: true do
+    resources :invites do
+      post :send_multiple, on: :collection
+    end
     resources :game_players
   end
 end

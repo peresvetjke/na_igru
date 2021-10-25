@@ -6,4 +6,9 @@ class Notification < ApplicationRecord
 
   scope :viewed,    -> { where(viewed: true)  }
   scope :unviewed,  -> { where(viewed: false) }
+
+  def mark_read!(ids)
+    Notification.find(params[:ids])
+    @notifications.update_all(viewed: true)
+  end
 end

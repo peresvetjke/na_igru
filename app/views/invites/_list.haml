@@ -1,0 +1,11 @@
+%h4 Game invites
+
+%table.table
+  %th Receiver
+  %th Status
+  %th Sender
+  - @game.invites.each do |invite|
+    %tr
+      %td= invite.recipient.email 
+      %td= invite.accepted
+      %td= invite.sender.email 

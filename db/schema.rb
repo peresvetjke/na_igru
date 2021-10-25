@@ -41,12 +41,14 @@ ActiveRecord::Schema.define(version: 2021_10_25_044733) do
 
   create_table "invites", force: :cascade do |t|
     t.bigint "game_id", null: false
-    t.bigint "recepient_id", null: false
+    t.bigint "sender_id", null: false
+    t.bigint "recipient_id", null: false
     t.boolean "accepted"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["game_id"], name: "index_invites_on_game_id"
-    t.index ["recepient_id"], name: "index_invites_on_recepient_id"
+    t.index ["recipient_id"], name: "index_invites_on_recipient_id"
+    t.index ["sender_id"], name: "index_invites_on_sender_id"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -88,6 +90,7 @@ ActiveRecord::Schema.define(version: 2021_10_25_044733) do
   add_foreign_key "game_players", "games"
   add_foreign_key "game_players", "players"
   add_foreign_key "games", "locations"
-  add_foreign_key "invites", "players", column: "recepient_id"
+  add_foreign_key "invites", "players", column: "recipient_id"
+  add_foreign_key "invites", "players", column: "sender_id"
   add_foreign_key "notifications", "players", column: "recepient_id"
 end
