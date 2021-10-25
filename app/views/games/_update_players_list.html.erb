@@ -35,10 +35,10 @@
     <td><%= game_player.player.email %></td>  
     <td>
         <%= f.fields_for :game_players, game_player do |gp_fields| %>
-          <%= gp_fields.check_box :attended, value: game_player.attended %>
+          <%= gp_fields.check_box :attended, class: "check_box_resource attended", value: game_player.attended %>
     </td>
     <td>
-          <%= gp_fields.check_box :paid, value: game_player.paid %>
+          <%= gp_fields.check_box :paid, class: "check_box_resource paid", value: game_player.paid %>
         <% end %>
     </td>
   </tr>

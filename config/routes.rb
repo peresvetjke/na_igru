@@ -13,6 +13,5 @@ Rails.application.routes.draw do
 
   resources :games do
     resources :game_players, shallow: true
-    end
   end
 end
