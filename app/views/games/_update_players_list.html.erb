@@ -10,39 +10,41 @@
 <% end %>
 
 <form>
-  <label for="attended">All attended?</label>
-  <input id="attended" class="check_box_all" type="checkbox">
-  <label for="paid">All paid?</label>
-  <input id="paid" class="check_box_all" type="checkbox">
+  <label for="attended_all">All attended?</label>
+  <input id="attended_all" class="check_box_all" type="checkbox">
+  <label for="paid_all">All paid?</label>
+  <input id="paid_all" class="check_box_all" type="checkbox">
 </form>
 
 <div class="alert alert-warning" role="alert">
   <p>Please mark player info and press 'submit'</p>
-  <%= form_with url: game_path(@game), model: @game, method: :patch do |f| %>
-  <%= f.submit 'Submit' %>
 </div>
 
 
+<%= form_for @game, method: :patch do |f| %>
+<%= f.submit 'Submit' %>
+
 <table class="table"> 
   <th>Email</th>
-  <th colspan="2">Actions</th>
+  <th>Attended?</th>
+  <th>Paid?</th>
 
-    <% @game_players.each do |game_player| %>
+<% @game.game_players.each do |game_player| %>
 
-    <tr>
-      <td><%= game_player.player.email %></td>
-      <td>
-        <%= f.label :attended %>
-        <%= f.check_box :attended, data: {resource_id: game_player.id}, class: "check_box_resource attended" %><br>
-      </td>
-      <td>
-        <%= f.label :paid %>
-        <%= f.check_box :paid, data: {resource_id: game_player.id}, class: "check_box_resource paid" %><br>
-      </td>
-    </tr>
+  <tr>
+    <td><%= game_player.player.email %></td>  
+    <td>
+        <%= f.fields_for :game_players, game_player do |gp_fields| %>
+          <%= gp_fields.check_box :attended, value: game_player.attended %>
+    </td>
+    <td>
+          <%= gp_fields.check_box :paid, value: game_player.paid %>
+        <% end %>
+    </td>
+  </tr>
       
-    <% end %>
+<% end %>
 
 <% end %>
 
-  </table>
+</table>

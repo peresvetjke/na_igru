@@ -11,6 +11,18 @@ class GamePlayersController < ApplicationController
     end
   end
 
+  def update_multiple
+    byebug
+    @game_players = GamePlayer.find(game_players_multiple_params[:game_players].keys)
+
+    @game_players.each do |game_player|
+      byebug
+      game_player.update(game_players_multiple_params[:game][game_player.id])
+    end
+
+    byebug
+  end
+
   def destroy
     @game_player.destroy
 
@@ -27,5 +39,9 @@ class GamePlayersController < ApplicationController
 
   def find_game_player
     @game_player = GamePlayer.find(params[:id])
+  end
+
+  def game_players_multiple_params
+    params.require(:game_players).permit(:id, :attended, :paid)
   end
 end

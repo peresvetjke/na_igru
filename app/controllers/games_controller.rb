@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  before_action :find_game, only: %i[show edit update destroy check_in check_out]
+  before_action :find_game, only: %i[show edit update destroy check_in check_out update_with_nested]
 
   def index
     @games = Game.all
@@ -58,6 +58,10 @@ class GamesController < ApplicationController
   end
 
   def game_params
-    params.require(:game).permit(:location_id, :min_players, :max_players, :passed, starting_time: [], end_time: [])
+    params.require(:game).permit(:id, :location_id, :min_players, :max_players, :passed, starting_time: [], end_time: [], :game_players_attributes => [:id, :attended, :paid])
+  end
+
+  def game_with_nested_params
+
   end
 end

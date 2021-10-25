@@ -4,6 +4,8 @@ class Game < ApplicationRecord
   has_many :game_players, dependent: :destroy
   has_many :players_assigned, through: :game_players, source: :player
 
+  accepts_nested_attributes_for :game_players
+  
 #  before_validation :before_validation_adjust_passed, on: :update
 
 

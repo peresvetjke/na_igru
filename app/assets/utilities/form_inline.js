@@ -5,10 +5,8 @@ document.addEventListener("turbolinks:load", () => {
   var cancel_controls = $(".form-inline-cancel");
   var errors = $(".errors")[0]  
 
-
-
-  console.log('edit_controls.length is ' + edit_controls.length)
   if (edit_controls.length) {
+    console.log('form-inline / working here!')
     for (var i = 0; i < edit_controls.length; i++) {
       edit_controls[i].addEventListener('click', formInlineLinkHandler)
       cancel_controls[i].addEventListener('click', formInlineLinkHandler)

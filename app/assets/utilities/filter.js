@@ -3,7 +3,9 @@ import Rails from '@rails/ujs';
 document.addEventListener("turbolinks:load", () => {
   var control = $("#search_text");
 
-  if (control) {
+  if (control.length > 0) {
+    console.log('filter / working here!')
+
     var tableBody = $("table tbody").append("<tr id='no_selection'><td>No selection</td><td></td><td></td></tr>");
     var noSelectionMarkup = $("#no_selection");
     noSelectionMarkup.hide();
