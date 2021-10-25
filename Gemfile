@@ -34,6 +34,9 @@ gem 'sprockets', '~> 4.0'
 # JQuery
 gem 'jquery-rails'
 
+# Haml
+gem "haml-rails", "~> 2.0"
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

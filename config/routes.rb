@@ -6,12 +6,16 @@ Rails.application.routes.draw do
   
   devise_for :players, skip: :all
 
-  resources :players
+  resources :players, shallow: true do
+    resources :notifications
+    resources :invites
+  end
+
   resources :locations do
     patch :update_inline, on: :member
   end
 
-  resources :games do
-    resources :game_players, shallow: true
+  resources :games, shallow: true do
+    resources :game_players
   end
 end

@@ -1,0 +1,16 @@
+%h2 Notifications
+%table.table
+  = form_for @player do |f|
+    .button.mb-3= f.submit "Mark as read"
+  %th
+    %input.check_box_all.ids{:id => "ids_all", :type => "checkbox"} 
+  %th Notification
+  %th DateTime
+  %th Game
+  - @notifications.each do |n|  
+    %tr
+      %td
+        %input.check_box_resource.ids{:type => "checkbox", data: {id: n.id}} 
+      %td= "#{n.body}"
+      %td= "#{n.created_at.strftime("%H:%M (%Y/%m/%d)")}"
+      %td= link_to "Game ##{n.game.id}", game_path(n.game)

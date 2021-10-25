@@ -3,6 +3,7 @@ class Game < ApplicationRecord
   belongs_to :location
   has_many :game_players, dependent: :destroy
   has_many :players_assigned, through: :game_players, source: :player
+  has_many :invites
 
   accepts_nested_attributes_for :game_players
   

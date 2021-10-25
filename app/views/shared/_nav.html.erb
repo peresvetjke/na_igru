@@ -9,5 +9,8 @@
     <li class="nav-item">
       <div class="nav-link"><%= link_to 'Players', players_path %></div>
     </li>
+    <li class="nav-item">
+      <div class="nav-link"><%= link_to "Notifications #{current_player.notifications.count}", player_notifications_path(current_player) %></div>
+    </li>
   </ul>
 </nav>
