@@ -1,27 +1,18 @@
 class NotificationsController < ApplicationController
-  before_action :find_player, only: %i[index create]
 
   def index
-    @notifications = @player.notifications
+    @notifications = current_player.notifications
   end
 
-  def show
-
+  def unviewed
+    @notifications = current_player.notifications.unviewed
+    render :index
   end
 
-  def create
-    #NotificationSender.new(current_player, )
-    @notification = current_player.notifications.create!(notification_params)
-    
-    redirect_to root_path, notice: "Notification sent"
-  end
-
-  def edit
-
-  end
-
-  def update
-
+  def mark_as_read
+    @notifications = Notification.find(params[:ids])
+    @notifications.each { |n| n.update_column(:viewed, true) }
+    redirect_to player_notifications_path(current_player), notice: "Notifications marked as read"
   end
 
   def destroy

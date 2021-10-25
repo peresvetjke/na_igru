@@ -47,5 +47,4 @@ function formCheckboxResourceHandler(event) {
     checkboxAll.checked = true
   }
 
-  
 }

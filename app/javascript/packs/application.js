@@ -14,8 +14,15 @@ import "channels"
 import "../../assets/utilities/filter.js"
 import "../../assets/utilities/form_inline.js"
 import "../../assets/utilities/select_all.js"
+import "../../assets/utilities/notifications.js"
 
 global.$ = require('jquery')//, require('jquery-ui'), require('jquery-blockui')
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+
+$.ajaxSetup({
+  headers: {
+    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+  }
+});

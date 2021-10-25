@@ -15,14 +15,17 @@
   </head>
 
   <body style="background-color:  #f2f2f2;">
-    <%= render 'shared/nav' %>
-    <div class="container" style="background-color: #ffffff;">
-      <div class="row justify-content-md-center" style="border: 2px solid lightgray;border-radius: 8px;padding: 5px;">
-      <%= render 'shared/flash' %>
-      <%= yield %>
-      </div>
-    </div>
 
+    <% if current_player.present? %>
+      <%= render 'shared/nav' %>
+    <% end %>
+      <div class="container" style="background-color: #ffffff;">
+        <div class="row justify-content-md-center" style="border: 2px solid lightgray;border-radius: 8px;padding: 5px;">
+        <%= render 'shared/flash' %>
+        <%= yield %>
+        </div>
+      </div>
+    
     <!-- Optional JavaScript; choose one of the two! -->
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>

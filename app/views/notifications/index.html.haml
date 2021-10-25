@@ -1,16 +1,30 @@
 %h2 Notifications
+
+= link_to "All notifications (#{current_player.notifications.count})", notifications_path 
+= link_to "Unviewed notifications (#{current_player.notifications.unviewed.count})", unviewed_notifications_path 
+
 %table.table
-  = form_for @player do |f|
-    .button.mb-3= f.submit "Mark as read"
+  .button.mb-3.mt-3
+    %input#mark_as_read.ajax.notifications{:type => "submit", :value => "Mark as read", :data => {id: current_player.id}} 
   %th
     %input.check_box_all.ids{:id => "ids_all", :type => "checkbox"} 
   %th Notification
   %th DateTime
   %th Game
-  - @notifications.each do |n|  
+  - if @notifications.present?
+    - @notifications.each do |n|  
+      %tr
+        %td
+          %input.check_box_resource.ids{:type => "checkbox", data: {id: n.id}} 
+        %td
+          - if n.viewed?
+            = "#{n.body}"
+          - else
+            %strong= "#{n.body}"
+        %td= "#{n.created_at.strftime("%H:%M (%Y/%m/%d)")}"
+        %td= link_to "Game ##{n.game.id}", game_path(n.game)
+  - else
     %tr
+      %td No records
       %td
-        %input.check_box_resource.ids{:type => "checkbox", data: {id: n.id}} 
-      %td= "#{n.body}"
-      %td= "#{n.created_at.strftime("%H:%M (%Y/%m/%d)")}"
-      %td= link_to "Game ##{n.game.id}", game_path(n.game)
+      %td

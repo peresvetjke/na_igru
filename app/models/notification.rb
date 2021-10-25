@@ -3,4 +3,7 @@ class Notification < ApplicationRecord
   belongs_to :game
 
   validates :body, presence: true
+
+  scope :viewed,    -> { where(viewed: true)  }
+  scope :unviewed,  -> { where(viewed: false) }
 end

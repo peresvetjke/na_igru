@@ -7,8 +7,12 @@ Rails.application.routes.draw do
   devise_for :players, skip: :all
 
   resources :players, shallow: true do
-    resources :notifications
     resources :invites
+  end
+
+  resources :notifications, only: :index do
+      get   :unviewed, on: :collection
+      patch :mark_as_read, on: :collection
   end
 
   resources :locations do

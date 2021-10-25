@@ -4,7 +4,6 @@ document.addEventListener("turbolinks:load", () => {
   var control = $("#search_text");
 
   if (control.length > 0) {
-    console.log('filter / working here!')
 
     var tableBody = $("table tbody").append("<tr id='no_selection'><td>No selection</td><td></td><td></td></tr>");
     var noSelectionMarkup = $("#no_selection");
