@@ -9,5 +9,6 @@ class Game < ApplicationRecord
   
 #  before_validation :before_validation_adjust_passed, on: :update
 
+  scope :games_player_in, -> (player) { joins(:game_players).where('game_players.player_id = ?', player.id) }
 
 end

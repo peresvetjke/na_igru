@@ -1,28 +1,25 @@
 %h2 Notifications
 
-= link_to "All notifications (#{current_player.notifications.count})", notifications_path 
-= link_to "Unviewed notifications (#{current_player.notifications.unviewed.count})", unviewed_notifications_path 
+%ul.nav.nav-tabs
+  %li.nav-item
+    = link_to "All notifications (#{current_player.notifications.count})", notifications_path, class: "get_notifications nav-link active", remote: true, data: { type: :json }
+  %li.nav-item
+    = link_to "Unviewed notifications (#{current_player.notifications.unviewed.count})", unviewed_notifications_path, class: "get_notifications nav-link", remote: true, data: { type: :json } 
 
-%table.table
-  .button.mb-3.mt-3
-    %input#mark_as_read.ajax.notifications{:type => "submit", :value => "Mark as read", :data => {id: current_player.id}} 
-  %th
-    %input.check_box_all.ids{:id => "ids_all", :type => "checkbox"} 
-  %th Notification
-  %th DateTime
-  %th Game
+.button.mb-3.mt-3
+  = button_to "Mark all as read", mark_all_as_read_notifications_path, class: "get_notifications", remote: true, data: { type: :json }, method: :patch
+
+%table.table#notifications_list
+  %tr.heading
+    %th Notification
+    %th DateTime
+    %th Game
   - if @notifications.present?
     - @notifications.each do |n|  
       %tr
-        %td
-          %input.check_box_resource.ids{:type => "checkbox", data: {id: n.id}} 
-        %td
-          - if n.viewed?
-            = "#{n.body}"
-          - else
-            %strong= "#{n.body}"
-        %td= "#{n.created_at.strftime("%H:%M (%Y/%m/%d)")}"
-        %td= link_to "Game ##{n.game.id}", game_path(n.game)
+        %td.body= "#{n.body}"
+        %td.created_at= "#{n.created_at.strftime("%H:%M (%Y/%m/%d)")}"
+        %td.link_to_game= link_to "Game ##{n.game.id}", game_path(n.game)
   - else
     %tr
       %td No records

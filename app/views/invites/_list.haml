@@ -7,5 +7,5 @@
   - @game.invites.each do |invite|
     %tr
       %td= invite.recipient.email 
-      %td= invite.accepted
+      %td= invite_status(invite)
       %td= invite.sender.email 

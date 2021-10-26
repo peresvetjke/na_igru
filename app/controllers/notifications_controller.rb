@@ -1,17 +1,23 @@
 class NotificationsController < ApplicationController
+  respond_to :html, :json
 
   def index
     @notifications = current_player.notifications
+    respond_with @notifications
   end
 
   def unviewed
     @notifications = current_player.notifications.unviewed
-    render :index
+    respond_with @notifications do |format|
+      format.html {render :index}
+    end
+    # render :index
   end
 
-  def mark_as_read
-    Notification.mark_read!(params[:ids])    
-    redirect_to player_notifications_path(current_player), notice: "Notifications marked as read"
+  def mark_all_as_read
+    notifications_ids = current_player.notifications.unviewed.pluck(:id)
+    Notification.mark_read!(notifications_ids)    
+    redirect_to notifications_path, notice: "All notifications marked as read"
   end
 
   def destroy

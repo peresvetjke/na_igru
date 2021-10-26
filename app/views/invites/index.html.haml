@@ -1,0 +1,25 @@
+%h2 Invites
+
+= link_to "All invites (#{current_player.invites_received.count})", invites_path, class: "invites", id: "get_all" 
+= link_to "New (#{current_player.invites_received.invites_new.count})", unviewed_invites_path, class: "invites", id: "get_new" 
+
+%table.table
+  %th Game
+  %th DateTime
+  %th From
+  %th Action
+  - if @invites.present?
+    - @invites.each do |i|  
+      %tr
+        %td= link_to "Game ##{i.game.id}", game_path(i.game)
+        %td= "#{i.created_at.strftime("%H:%M (%Y/%m/%d)")}"
+        %td= i.sender.email
+        %td
+          =link_to "Accept"
+          =link_to "Decline" 
+  - else
+    %tr
+      %td No records
+      %td
+      %td
+      %td

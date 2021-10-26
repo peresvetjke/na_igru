@@ -4,7 +4,10 @@
       <div class="nav-link"><%= link_to 'Locations', locations_path %></div>
     </li>
     <li class="nav-item">
-      <div class="nav-link"><%= link_to 'Games', games_path %></div>
+      <div class="nav-link"><%= link_to 'All games', games_path %></div>
+    </li>
+    <li class="nav-item">
+      <div class="nav-link"><%= link_to 'My games', player_games_path(current_player) %></div>
     </li>
     <li class="nav-item">
       <div class="nav-link"><%= link_to 'Players', players_path %></div>
@@ -14,7 +17,12 @@
 
     <li class="nav-item">
       <div class="nav-link">
-        <%= link_to "Notifications (new: #{current_player.notifications.unviewed.count})", unviewed_notifications_path %>
+        <%= link_to "Notifications (new: #{current_player.notifications.unviewed.count})", notifications_path %>
+      </div>
+    </li>
+    <li class="nav-item">
+      <div class="nav-link">
+        <%= link_to "Invites (new: #{current_player.invites_received.invites_new.count})", invites_path %>
       </div>
     </li>
     <li class="nav-item">

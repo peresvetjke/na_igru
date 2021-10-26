@@ -3,16 +3,20 @@ class InvitesController < ApplicationController
   before_action :set_recipient, only: :create
 
   def index
-    @invites = current_player.invites_sent
+    @invites = current_player.invites_received
   end
 
-  def send_multiple
-    Invite.send_mupltiple!(params[:ids])
-    redirect_to player_notifications_path(current_player), notice: "Invites sent."
+  def unviewed
+    @invites = current_player.invites_received.invites_new
+    render :index
   end
 
   def update
-
+    if invite.update(invite_params)
+      redirect_to invites_path, notice: 'Invite accepted.'
+    else
+      render :index
+    end
   end
 
   def create
@@ -21,7 +25,7 @@ class InvitesController < ApplicationController
     if @invite.save
       redirect_to game_path(@game), notice: "Invite sent to #{@recipient.email}"
     else
-      render 'games/show'
+      render 'games/show' # проверить , что не отправляется дважды
     end
   end
 
@@ -30,6 +34,14 @@ class InvitesController < ApplicationController
   end
 
   private
+
+  def invite_params
+    params.require(:invite).permit(:accepted)
+  end
+
+  def find_invite
+    @invite = Invite.find(params[:id])
+  end
 
   def find_game
     @game = Game.find(params[:game_id])

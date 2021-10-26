@@ -8,7 +8,7 @@
 
 <h2>Show game</h2>
 
-  <p><strong>Status: </strong><span style="color: <%= status_text_color(@game)%>;"><%= status(@game) %></span></p>
+  <p><strong>Status: </strong><span style="color: <%= status_text_color(@game)%>;"><%= game_status(@game) %></span></p>
     <% if @game.passed.nil? %>
       <div class="alert alert-warning" role="alert">
         <p>Waiting for status update:</p>

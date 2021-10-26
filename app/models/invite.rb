@@ -7,16 +7,11 @@ class Invite < ApplicationRecord
   # recepient can't be current user
   validate :recipient_joined_lineup_already?
 
+  scope :invites_new,       -> { where(accepted: nil) }
+  scope :invites_accepted,  -> { where(accepted: true) }
+  scope :invites_declined,  -> { where(accepted: false) }
+
   def recipient_joined_lineup_already?
     errors.add(:base, "Player #{self.recipient.email} has already joined lineup.") if self.game.players_assigned.include?(self.recipient)
   end
-
-=begin
-  def self.send_multiple!(ids)
-    @ids.each { |p_id| @game.invites.create(recepient_id: p_id) }
-      #unless invite.save
-      #  invite.errors.full_messages.each { |mes| @errors_messages[:p_id] << mes }
-      #end
-  end
-=end
 end

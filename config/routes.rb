@@ -12,21 +12,30 @@ Rails.application.routes.draw do
 
   devise_for :players, skip: :all
 
-  resources :players, shallow: true
+  resources :players, shallow: true do
+    get :counts, on: :collection
+    resources :games, only: :index, on: :collection
+  end
 
   resources :notifications, only: :index do
       get   :unviewed, on: :collection
-      patch :mark_as_read, on: :collection
+      patch :mark_all_as_read, on: :collection
   end
 
   resources :locations do
     patch :update_inline, on: :member
   end
 
+  resources :invites, only: :index do
+    get :unviewed, on: :collection
+  end
+  
   resources :games, shallow: true do
     resources :invites do
       post :send_multiple, on: :collection
     end
     resources :game_players
   end
+
+  
 end
