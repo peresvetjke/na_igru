@@ -15,8 +15,11 @@
         %td= "#{i.created_at.strftime("%H:%M (%Y/%m/%d)")}"
         %td= i.sender.email
         %td
-          =link_to "Accept"
-          =link_to "Decline" 
+          - if i.accepted.present?
+            = invite_status(i)
+          - else
+            = link_to "Accept",  invite_accept_path(i),  method: :patch
+            = link_to "Decline", invite_decline_path(i), method: :patch 
   - else
     %tr
       %td No records

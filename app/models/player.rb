@@ -15,8 +15,11 @@ class Player < ApplicationRecord
   has_many :invites_received, class_name: "Invite", foreign_key: "recipient_id"
   has_many :invites_sent, class_name: "Invite", foreign_key: "sender_id"
 
-  scope :players_in_game, -> (game) {joins(:game_players).where('game_players.game_id = ?', game.id)}
-  scope :players_not_in_game, -> (game) {where('id NOT IN (?)', players_in_game(game).pluck(:id))}
+  scope :players_in_game,               -> (game) {joins(:game_players).where('game_players.game_id = ?', game.id)}
+  scope :players_not_in_game,           -> (game) {where('id NOT IN (?)', players_in_game(game).pluck(:id))}
+  scope :players_invited_in_game,       -> (game) {joins('INNER JOIN invites ON invites.recipient_id = players.id').where('invites.game_id = ?', game.id)}
+  scope :players_available_for_invite,  -> (game) {players_not_in_game(game).where.not(id: Player.players_invited_in_game(game))}
+  scope :current_user, -> {where(id: current_player.id)}
 
   def join_game(game)
     game.players_assigned << self

@@ -11,6 +11,19 @@ class Invite < ApplicationRecord
   scope :invites_accepted,  -> { where(accepted: true) }
   scope :invites_declined,  -> { where(accepted: false) }
 
+  def accept!
+    self.accepted = true
+    save
+    self.recipient.join_game(self.game)
+    NotificationSender.new(self.recipient, self.game, :invite_accepted, self.sender).call
+  end
+
+  def decline!
+    self.accepted = false
+    save
+    NotificationSender.new(self.recipient, self.game, :invite_declined, self.sender).call
+  end
+
   def recipient_joined_lineup_already?
     errors.add(:base, "Player #{self.recipient.email} has already joined lineup.") if self.game.players_assigned.include?(self.recipient)
   end

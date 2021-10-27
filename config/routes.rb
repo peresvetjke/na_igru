@@ -26,7 +26,9 @@ Rails.application.routes.draw do
     patch :update_inline, on: :member
   end
 
-  resources :invites, only: :index do
+  resources :invites, shallow: true do
+    patch :accept,  to: "invites#accept" # or post?
+    patch :decline, to: "invites#decline"
     get :unviewed, on: :collection
   end
   

@@ -1,4 +1,5 @@
 class InvitesController < ApplicationController
+  before_action :find_invite, only: %i[accept decline]
   before_action :find_game, only: %i[create send_multiple]
   before_action :set_recipient, only: :create
 
@@ -9,6 +10,16 @@ class InvitesController < ApplicationController
   def unviewed
     @invites = current_player.invites_received.invites_new
     render :index
+  end
+
+  def accept
+    @invite.accept!
+    redirect_to invites_path
+  end
+
+  def decline
+    @invite.decline!
+    redirect_to invites_path
   end
 
   def update
@@ -40,7 +51,7 @@ class InvitesController < ApplicationController
   end
 
   def find_invite
-    @invite = Invite.find(params[:id])
+    @invite = Invite.find(params[:invite_id])
   end
 
   def find_game
