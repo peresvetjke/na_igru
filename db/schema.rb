@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_29_054324) do
+ActiveRecord::Schema.define(version: 2021_10_29_135237) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2021_10_29_054324) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "min_players"
     t.integer "max_players"
-    t.boolean "passed"
+    t.boolean "confirmed"
     t.index ["location_id"], name: "index_games_on_location_id"
   end
 
@@ -75,6 +75,15 @@ ActiveRecord::Schema.define(version: 2021_10_29_054324) do
     t.index ["recepient_id"], name: "index_notifications_on_recepient_id"
   end
 
+  create_table "player_locations", force: :cascade do |t|
+    t.bigint "player_id", null: false
+    t.bigint "location_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["location_id"], name: "index_player_locations_on_location_id"
+    t.index ["player_id"], name: "index_player_locations_on_player_id"
+  end
+
   create_table "players", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.text "type", default: "Player", null: false
@@ -98,4 +107,6 @@ ActiveRecord::Schema.define(version: 2021_10_29_054324) do
   add_foreign_key "invites", "players", column: "recipient_id"
   add_foreign_key "invites", "players", column: "sender_id"
   add_foreign_key "notifications", "players", column: "recepient_id"
+  add_foreign_key "player_locations", "locations"
+  add_foreign_key "player_locations", "players"
 end

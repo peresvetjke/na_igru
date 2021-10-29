@@ -10,13 +10,13 @@
 <h2>Show game</h2>
     <p><strong>Status: </strong><span style="color: <%= status_text_color(@game)%>;"><%= game_status(@game) %></span></p>
 
-<% if @game.passed.nil? %> 
+<% if @game.confirmed.nil? %> 
   <table class="mb-3">
   <td style="width: 20px;">
-  <%= button_to "Mark game as passed", pass_game_path(@game), class: "btn btn-outline-success btn-sm" %>
+  <%= button_to "Cofirm game", confirm_game_path(@game), class: "btn btn-outline-success btn-sm" %>
 </td>
 <td>
-  <%= button_to "Cancel the game", cancel_game_path(@game), class: "btn btn-outline-danger btn-sm", data: {confirm: "Are you sure?"} %>
+  <%= button_to "Cancel", cancel_game_path(@game), class: "btn btn-outline-danger btn-sm", data: {confirm: "Are you sure you want cancel the game?"} %>
 </td>
   </table>
 <% end %>
@@ -32,15 +32,15 @@
 
 
   <p>Location: <%= @game.location.title || 'none' %></p>
-  <p>Starting time: <%= @game.starting_time || 'none' %></p>
-  <p>End time: <%= @game.end_time || 'none' %></p>
+  <p>Starting time: <%= @game.starting_time_formatted || 'none' %></p>
+  <p>End time: <%= @game.end_time_formatted || 'none' %></p>
   <p>Players: <%= @game.players_assigned.count %></p>
   <p>Organizator: <%= @game.organizator.email %></p>
   <p>(Min. players: <%= @game.min_players || 'none' %>; Max. players: <%= @game.max_players || 'none' %>)</p>
 
-<% if @game.passed.nil? %>
+<% if @game.confirmed.nil? %>
 <%= render 'games/show_players_list' %>
-<% elsif @game.passed %>
+<% elsif @game.confirmed %>
 <%= render 'games/update_players_list' %>
 <% end %>
 

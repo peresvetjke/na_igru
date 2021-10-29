@@ -8,10 +8,10 @@ class GamePlayer < ApplicationRecord
   after_create  :after_create_send_notification
 
   def after_destroy_send_notification
-    NotificationSender.new(self.player, self.game, :player_left, self.game.organizator).call
+    PlayerInfoNotificationSender.new(self.game, :player_left, self.game.organizator, self.player).call
   end
 
   def after_create_send_notification
-    NotificationSender.new(self.player, self.game, :new_player, self.game.organizator).call
+    PlayerInfoNotificationSender.new(self.game, :new_player, self.game.organizator, self.player).call
   end
 end

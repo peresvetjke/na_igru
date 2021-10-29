@@ -1,15 +1,15 @@
 module GamesHelper
 
   def game_status(game)
-    return "upcoming" if game.passed.nil?
-    game.passed ? "Passed" : "Cancelled"
+    return "TBD" if game.confirmed.nil?
+    game.confirmed ? "Confirmed" : "Cancelled"
   end
 
   def status_text_color(game)
     case game_status(game)
-    when "upcoming"
+    when "TBD"
       "gray"
-    when "Passed"
+    when "Confirmed"
       "green"
     when "Cancelled"
       "red"

@@ -21,7 +21,7 @@ Location.all.each do |l|
 
   5.times do |g|
     now = Time.now
-    game = l.games.new(organizator_id: organizator.id, starting_time: "#{now.year}#{now.month}#{now.day + g + 1} 21:00")
+    game = l.games.new(organizator_id: organizator.id, starting_time: Time.new(2021,10,30,21,00) + g * 86400, end_time: Time.new(2021,10,30,22,00) + g * 86400)
     game.save!
 
     6.times do |g_p|
@@ -29,10 +29,3 @@ Location.all.each do |l|
     end
   end
 end
-
-
-
-#{}"lng"=>, "lat"=>, "region"=>, "district"=>, "place"=>
-
-
-# "lng"=>"", "lat"=>, "region"=>, "district"=>, "place"=>

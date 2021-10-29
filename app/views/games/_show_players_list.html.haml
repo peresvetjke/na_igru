@@ -1,7 +1,7 @@
 .block.mt-2 
   %h2 Invites
 
-  - if @game.passed.nil?
+  - if @game.confirmed.nil?
     .mb-3
       = form_with model: @game_player, url: game_invites_path(@game) do |f|
         = f.collection_select :id, Player.players_available_for_invite(@game).where.not(id: current_player.id).order(:email), :id, :email, prompt: 'Select'

@@ -1,8 +1,8 @@
 class GamesController < ApplicationController
   before_action :find_player,   only: :index,               if: -> { params[:player_id].present? }
   before_action :find_location, only: %i[index new create], if: -> { params[:location_id].present? }
-  before_action :set_games, only: :index
-  before_action :find_game, only: %i[show edit update destroy join leave cancel pass]
+  before_action :set_games, only: :index,                   if: -> { params[:player_id].nil? && params[:location_id].nil? }
+  before_action :find_game, only: %i[show edit update destroy join leave cancel confirm]
 
   def index
 
@@ -27,13 +27,13 @@ class GamesController < ApplicationController
     redirect_to @game, notice: "The game was cancelled."
   end
 
-  def pass
-    @game.pass
-    redirect_to @game, notice: "The game was marked as passed."
+  def confirm
+    @game.confirm
+    redirect_to @game, notice: "The game was confirmed."
   end
 
   def new
-    
+    @game = Game.new if @game.nil?
   end
 
   def create

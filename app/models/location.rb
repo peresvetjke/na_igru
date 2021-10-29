@@ -1,5 +1,6 @@
 class Location < ApplicationRecord
   has_many :games
+  has_many :player_locations
   
   validates :title, presence: true
   validate :coordinates_maintained

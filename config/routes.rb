@@ -22,7 +22,9 @@ Rails.application.routes.draw do
       patch :mark_all_as_read, on: :collection
   end
 
-  resources :locations do
+  resources :locations, shallow: true do
+    get :favorite, on: :collection
+    resources :player_locations, only: %i[create destroy]
     resources :games, only: %i[new create index]
     patch :update_inline, on: :member
   end
@@ -34,7 +36,7 @@ Rails.application.routes.draw do
   end
   
   resources :games, shallow: true do
-    post :join, :leave, :cancel, :pass, on: :member
+    post :join, :leave, :cancel, :confirm, on: :member
     resources :invites do
       post :send_multiple, on: :collection
     end

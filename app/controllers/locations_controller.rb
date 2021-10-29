@@ -6,6 +6,11 @@ class LocationsController < ApplicationController
     
   end
 
+  def favorite
+    @locations = current_player.favorite_locations
+    render :index
+  end
+
   def show
     @games = @location.games
   end

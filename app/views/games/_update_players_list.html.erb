@@ -1,6 +1,6 @@
 <h2>Players list</h2>
 
-<% if @game.passed.nil? %>
+<% if @game.confirmed.nil? %>
   <div class="mb-3">
   <%= form_with model: @game_player, url: game_game_players_path(@game) do |f| %>
   <%= f.collection_select :id, Player.order(:email), :id, :email, prompt: 'Select' %>

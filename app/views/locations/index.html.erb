@@ -2,6 +2,7 @@
 <%= link_to 'New location', new_location_path, data: {turbolinks: "false"} %> <br>
 <%= render partial: 'shared/errors', locals: {resource: @location} %>
 <table class="table">
+  <th></th>
   <th>Title</th>
   <th>Address</th>
   <th colspan="2">Players amount default (max / min)</th>

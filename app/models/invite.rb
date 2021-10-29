@@ -15,13 +15,13 @@ class Invite < ApplicationRecord
     self.accepted = true
     save
     self.recipient.join_game(self.game)
-    NotificationSender.new(self.recipient, self.game, :invite_accepted, self.sender).call
+    PlayerInfoNotificationSender.new(self.game, :invite_accepted, self.sender, self.recipient).call
   end
 
   def decline!
     self.accepted = false
     save
-    NotificationSender.new(self.recipient, self.game, :invite_declined, self.sender).call
+    PlayerInfoNotificationSender.new(self.game, :invite_declined, self.sender, self.recipient).call
   end
 
   def recipient_joined_lineup_already?

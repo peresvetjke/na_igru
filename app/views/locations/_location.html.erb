@@ -1,4 +1,11 @@
 <%= content_tag :tr, class: "form-inline-row-current", data: {id: location.id} do %>
+  <td>
+    <% if current_player.favorite_locations.include?(location) %>
+    <%= button_to "Remove from favorites", player_location_path(current_player.player_location(location)), data: { turbolinks: false }, method: :delete %>
+    <% else %>
+    <%= button_to "Add to favorites", location_player_locations_path(location), data: { turbolinks: false } %>
+    <% end %>
+  </td>
   <td><%= location.title %></td>
   <td><%= location.address %></td>
   <td><%= location.default_min_players || '-' %></td>

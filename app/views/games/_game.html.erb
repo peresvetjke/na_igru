@@ -1,7 +1,7 @@
   <tr> 
     <td><%= game.location.title %></td>
-    <td><%= game.starting_time || 'none' %></td>
-    <td><%= game.end_time || 'none' %></td>
+    <td><%= game.starting_time_formatted || 'none' %></td>
+    <td><%= game.end_time_formatted || 'none' %></td>
     <td><%= game.organizator.email %></td>
     <td><%= game.players_assigned.count %></td>
     <td><%= game_status(game) %></td>
