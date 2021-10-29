@@ -1,6 +1,6 @@
 <div class="mb-3">
   <%= form.label "location_id", "Location", class: 'form-label' %><br>
-  <%= form.collection_select "location_id", Location.order(:title), :id, :title, class: 'form-control', value: game.location_id %>
+  <%= form.collection_select "location_id", Location.order(:title), :id, :title, class: 'form-control', value: game.location&.id, prompt: "Select" %>
 </div>
 <div class="mb-3">
   <%= form.label "starting_time", class: 'form-label' %><br>

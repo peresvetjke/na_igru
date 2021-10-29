@@ -7,7 +7,7 @@ class LocationsController < ApplicationController
   end
 
   def show
-
+    @games = @location.games
   end
 
   def new
@@ -15,6 +15,7 @@ class LocationsController < ApplicationController
   end
 
   def create
+    byebug
     @location = Location.new(location_params)
     
     if @location.save

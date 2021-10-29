@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   end
 
   resources :locations do
+    resources :games, only: %i[new create index]
     patch :update_inline, on: :member
   end
 

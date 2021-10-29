@@ -13,13 +13,15 @@ end
 
 organizator = Player.first
 
-3.times do |l|
-  loc = Location.new(title: "Location#{l+1}")
-  loc.save!
+location1 = Location.create!(title: "ВЛКСМ", lng: '37.85257389735338', lat: "56.00034562150262", region: "Pushkinsky District", district: "Pushkino", place: "141206")
+location2 = Location.create!(title: "Стадион Труд", lng: "37.901350894736964", lat: "55.98045849213358", region: "Moscow", district: "Ivanteyevka", place: "141280")
+location3 = Location.create!(title: "Стадион Вымпел", lng: "37.82582948295513", lat: "55.91590595437674", region: "Moscow", district: "Korolev", place: "141070")
+
+Location.all.each do |l|
 
   5.times do |g|
     now = Time.now
-    game = loc.games.new(organizator_id: organizator.id, starting_time: "#{now.year}#{now.month}#{now.day + g + 1} 21:00")
+    game = l.games.new(organizator_id: organizator.id, starting_time: "#{now.year}#{now.month}#{now.day + g + 1} 21:00")
     game.save!
 
     6.times do |g_p|
@@ -27,3 +29,10 @@ organizator = Player.first
     end
   end
 end
+
+
+
+#{}"lng"=>, "lat"=>, "region"=>, "district"=>, "place"=>
+
+
+# "lng"=>"", "lat"=>, "region"=>, "district"=>, "place"=>

@@ -17,6 +17,21 @@ body { margin: 0; padding: 0; }
 <%= content_tag :div, nil, id: "map", style: "margin-right: auto; margin-left: 10px;", data: {lng: @location.lng, lat: @location.lat} %>
 <%#= content_tag :div, nil, style: "width: 966px; height: 420px" %>
 
+<div class="block mt-3">
+<h2>Games</h2>
+<%= link_to 'New game', new_location_game_path(@location) %> <br>
+<table class="table">
+  <th>Location</th>
+  <th>Starting time</th>
+  <th>End time</th>
+  <th>Organizator</th>
+  <th>Players amount</th>
+  <th>Status</th>
+  <th colspan="3">Actions</th>
+  <%= render @games %>
+</table>
+</div>
+
 <%= link_to 'Back to locations', locations_path, class: "mt-4" %>
 
 <script>

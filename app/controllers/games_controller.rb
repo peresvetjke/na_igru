@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
-  before_action :find_player, only: :index, if: -> { params[:player_id].present? }
+  before_action :find_player,   only: :index,               if: -> { params[:player_id].present? }
+  before_action :find_location, only: %i[index new create], if: -> { params[:location_id].present? }
   before_action :set_games, only: :index
   before_action :find_game, only: %i[show edit update destroy check_in check_out update_with_nested]
 
@@ -12,7 +13,7 @@ class GamesController < ApplicationController
   end
 
   def new
-    @game = Game.new
+    
   end
 
   def create
@@ -55,12 +56,19 @@ class GamesController < ApplicationController
 
   private
 
+  def find_location
+    @location = Location.find(params[:location_id])
+    @games = @location.games
+    @game = @location.games.new
+  end
+
   def find_player
     @player = Player.find(params[:player_id])
+    @games = Game.games_player_in(@player)
   end
   
   def set_games
-    @games = @player.present? ? Game.games_player_in(@player) : Game.all
+    @games = Game.all
   end
 
   def find_game
