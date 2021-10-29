@@ -6,19 +6,31 @@
 <%= render 'shared/errors', resource: @invite %>
 <% end %>
 
-<h2>Show game</h2>
 
-  <p><strong>Status: </strong><span style="color: <%= status_text_color(@game)%>;"><%= game_status(@game) %></span></p>
-    <% if @game.passed.nil? %>
-      <div class="alert alert-warning" role="alert">
-        <p>Waiting for status update:</p>
-      <%= form_with url: game_path(@game), model: @game, method: :patch do |f| %>
-      <%= f.label :passed, "Game passed as planned?" %>
-      <%= f.check_box :passed %><br>
-      <%= f.submit 'Save' %>
-      <% end %>
-      </div>
-    <% end %>
+<h2>Show game</h2>
+    <p><strong>Status: </strong><span style="color: <%= status_text_color(@game)%>;"><%= game_status(@game) %></span></p>
+
+<% if @game.passed.nil? %> 
+  <table class="mb-3">
+  <td style="width: 20px;">
+  <%= button_to "Mark game as passed", pass_game_path(@game), class: "btn btn-outline-success btn-sm" %>
+</td>
+<td>
+  <%= button_to "Cancel the game", cancel_game_path(@game), class: "btn btn-outline-danger btn-sm", data: {confirm: "Are you sure?"} %>
+</td>
+  </table>
+<% end %>
+
+
+<% unless current_player == @game.organizator %>
+  <% if @game.players_assigned.include?(current_player) %>
+    <%= button_to "Leave", leave_game_path(@game), class: "btn btn-primary justify-content-end" %>
+  <% else %>
+    <%= button_to "Join", join_game_path(@game), class: "btn btn-primary" %>
+  <% end %>
+<% end %>
+
+
   <p>Location: <%= @game.location.title || 'none' %></p>
   <p>Starting time: <%= @game.starting_time || 'none' %></p>
   <p>End time: <%= @game.end_time || 'none' %></p>

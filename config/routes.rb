@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   end
   
   resources :games, shallow: true do
+    post :join, :leave, :cancel, :pass, on: :member
     resources :invites do
       post :send_multiple, on: :collection
     end

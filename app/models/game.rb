@@ -9,8 +9,16 @@ class Game < ApplicationRecord
   
 #  before_validation :before_validation_adjust_passed, on: :update
 
-  scope :games_player_in,               -> (player) { joins(:game_players).where('game_players.player_id = ?', player.id) }
+  scope :games_player_in, -> (player) { joins(:game_players).where('game_players.player_id = ?', player.id) }
   
-  
+  def cancel
+    self.passed = false
+    save
+  end
+
+  def pass
+    self.passed = true
+    save
+  end
 
 end

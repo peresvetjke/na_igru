@@ -2,7 +2,7 @@ class GamesController < ApplicationController
   before_action :find_player,   only: :index,               if: -> { params[:player_id].present? }
   before_action :find_location, only: %i[index new create], if: -> { params[:location_id].present? }
   before_action :set_games, only: :index
-  before_action :find_game, only: %i[show edit update destroy check_in check_out update_with_nested]
+  before_action :find_game, only: %i[show edit update destroy join leave cancel pass]
 
   def index
 
@@ -10,6 +10,26 @@ class GamesController < ApplicationController
 
   def show
     @game_players = GamePlayer.where(game: @game)
+  end
+
+  def join
+    current_player.join_game(@game)
+    redirect_to @game, notice: "You joined the game."
+  end
+
+  def leave
+    current_player.leave_game(@game)
+    redirect_to @game, notice: "You left the game."
+  end
+
+  def cancel
+    @game.cancel
+    redirect_to @game, notice: "The game was cancelled."
+  end
+
+  def pass
+    @game.pass
+    redirect_to @game, notice: "The game was marked as passed."
   end
 
   def new
