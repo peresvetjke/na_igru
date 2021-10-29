@@ -33,7 +33,7 @@ class Game < ApplicationRecord
   end
 
   def send_notifications
-    LocationInfoNotificationSender.new(self, :game_created).call
+    LocationInfoNotificationSender.new(self).call
   end
 
 end

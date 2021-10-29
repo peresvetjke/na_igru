@@ -1,14 +1,13 @@
-class GameInfoNotificationSender
+class GameInfoNotificationSender < NotificationSender
 
   TYPES = [:game_cancelled, :game_confirmed]
    
   def initialize(game, message_type)
-    @game = game
-    @message_type = message_type
+    super(game, message_type)
   end
 
   def call
-    @game.players_assigned.each { |player| player.notifications.create!(body: message, game: @game) }
+    @game.players_assigned.each { |player| inform_player(player) }
   end
 
   def message
