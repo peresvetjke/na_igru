@@ -1,5 +1,36 @@
+<%= content_for :head do %>
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.js"></script>
+<style>
+body { margin: 0; padding: 0; }
+#map { position: relative; width: 966px; height: 400px }
+</style>
+<% end %>
+
 <h2>Show location</h2>
 <p>Title: <%= @location.title %></p>
 <p>Min. players amount (default): <%= @location.default_min_players || '-' %></p>
 <p>Max. players amount (default): <%= @location.default_max_players || '-' %></p>
-<%= link_to 'Back to locations', locations_path %>
+<p>Address: <%= @location.address %></p>
+
+<%# Display map with location marker on it %>
+<%= content_tag :div, nil, id: "map", style: "margin-right: auto; margin-left: 10px;", data: {lng: @location.lng, lat: @location.lat} %>
+<%#= content_tag :div, nil, style: "width: 966px; height: 420px" %>
+
+<%= link_to 'Back to locations', locations_path, class: "mt-4" %>
+
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoicGVyZXN2ZXRqa2UiLCJhIjoiY2t2OWtwbnV5MDdwMzJ4bWdyeWNsMHdkaCJ9.SrRRsNDbB_0klBwaQSSdYQ';
+const map = new mapboxgl.Map({
+container: 'map',
+style: 'mapbox://styles/mapbox/streets-v11',
+center: [$("#map")[0].dataset.lng, $("#map")[0].dataset.lat],
+zoom: 12
+});
+ 
+// Create a default Marker and add it to the map.
+const marker1 = new mapboxgl.Marker()
+.setLngLat([$("#map")[0].dataset.lng, $("#map")[0].dataset.lat])
+.addTo(map);
+ 
+</script>

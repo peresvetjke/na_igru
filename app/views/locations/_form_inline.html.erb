@@ -9,6 +9,7 @@
             method: :patch do |form| %>
 
     <td><%= form.text_field location.errors.present? ? "title" : "location[title]", value: location.title %></td>
+    <td><%= form.text_field nil, value: location.address, :readonly => true %></td>
     <td><%= form.number_field location.errors.present? ? "default_min_players" : "location[default_min_players]", value: location.default_min_players %></td>
     <td><%= form.number_field location.errors.present? ? "default_max_players" : "location[default_max_players]", value: location.default_max_players %></td>
     <td><%= link_to 'Cancel', {}, data: {id: location.id}, class: 'form-inline-cancel' %></td>
