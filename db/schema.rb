@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_25_044733) do
+ActiveRecord::Schema.define(version: 2021_10_29_054324) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,11 @@ ActiveRecord::Schema.define(version: 2021_10_25_044733) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "default_min_players"
     t.integer "default_max_players"
+    t.text "lng"
+    t.text "lat"
+    t.text "region"
+    t.text "district"
+    t.text "place"
   end
 
   create_table "notifications", force: :cascade do |t|

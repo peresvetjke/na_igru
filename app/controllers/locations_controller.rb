@@ -63,6 +63,6 @@ class LocationsController < ApplicationController
   end
   
   def location_params
-    params.require(:location).permit(:title, :default_min_players, :default_max_players)
+    params.require(:location).permit(:title, :default_min_players, :default_max_players, :lng, :lat, :region, :district, :place)
   end
 end

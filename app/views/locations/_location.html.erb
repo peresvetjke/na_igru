@@ -1,5 +1,6 @@
 <%= content_tag :tr, class: "form-inline-row-current", data: {id: location.id} do %>
   <td><%= location.title %></td>
+  <td><%= location.address %></td>
   <td><%= location.default_min_players || '-' %></td>
   <td><%= location.default_max_players || '-' %></td>
   <td><%= link_to 'Show', location_path(location) %></td>

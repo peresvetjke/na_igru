@@ -20,29 +20,16 @@
   <%= form.number_field "default_max_players", in: 2..50, step: 1, class: 'form-control', value: location.default_max_players %>
 </div>
 
-<div class="mb-3">
-  <%= form.label "lng", class: 'form-label' %>
-  <%= form.text_field "lat", id: "lng", class: 'form-control' %>
-</div>
-<div class="mb-3">
-  <%= form.label "lat", class: 'form-label' %>
-  <%= form.text_field "lat", id: "lat", class: 'form-control' %>
-</div>
-<div class="mb-3">
-  <%= form.label "region", class: 'form-label' %>
-  <%= form.text_field "region", id: "region", class: 'form-control' %>
-</div>
-<div class="mb-3">
-  <%= form.label "district", class: 'form-label' %>
-  <%= form.text_field "district", id: "district", class: 'form-control' %>
-</div>
-<div class="mb-3">
-  <%= form.label "place", class: 'form-label' %>
-  <%= form.text_field "place", id: "place", class: 'form-control' %>
-</div>
+  <%= form.hidden_field "lng", id: "lng", class: 'form-control' %>
+  <%= form.hidden_field "lat", id: "lat", class: 'form-control' %>
+  <%= form.hidden_field "region", id: "region", class: 'form-control' %>
+  <%= form.hidden_field "district", id: "district", class: 'form-control' %>
+  <%= form.hidden_field "place", id: "place", class: 'form-control' %>
+
   <%= form.submit %>
 
 <div id="map" class="mt-5"></div>
+<%= content_tag :div, nil, style: "width: 966px; height: 420px" %>
 
 <div id="geocoder"></div>
 <pre id="result"></pre>
