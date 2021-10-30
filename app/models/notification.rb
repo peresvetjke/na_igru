@@ -14,5 +14,8 @@ class Notification < ApplicationRecord
 
   #  ----------------
 
+  def time_formatted
+  end
+
 
 end

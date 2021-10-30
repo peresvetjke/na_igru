@@ -7,7 +7,6 @@ document.addEventListener("turbolinks:load", () => {
 
   var notificationsTable = $("#notifications_list")
   var controls = $(".get_notifications")
-  console.log('notificationsTable ? yes its '+notificationsTable)
 
   if (controls.length) {
     for (var i = 0; i < controls.length; i++) {
@@ -21,10 +20,9 @@ document.addEventListener("turbolinks:load", () => {
 })
 
 function updateTable(notificationsTable, _data) {
-  console.log('who is notificationsTable ? maybe its '+ notificationsTable)
   notificationsTable.find("tr").not(".heading").remove() // clear current content
   $(_data).each(function() {
-    var newRowContent = `<tr><td>${this.body}</td><td>${this.created_at}</td><td>${this.game_id}</td></tr>`
+    var newRowContent = `<tr><td>${this.body}</td><td>${this.created_at}</td><td><a href="games/${this.game_id}/">Game #${this.game_id}</a></td></tr>`
     $('#notifications_list > tbody:last-child').append(newRowContent); // add new content
   });
 }

@@ -22,7 +22,7 @@ module NaIgru
     #
     # config.time_zone = "Central Time (US & Canada)"
     config.time_zone = "Moscow"
-    
+    Time::DATE_FORMATS[:default] = "%H-%M (%d/%m/%Y)"
     # config.eager_load_paths << Rails.root.join("extras")
 
   end

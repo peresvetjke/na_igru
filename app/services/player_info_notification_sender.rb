@@ -2,14 +2,11 @@ class PlayerInfoNotificationSender  < NotificationSender
 
   TYPES = [:new_player, :player_left, :invite_accepted, :invite_declined]
 
-  def initialize(game, message_type, player_to, player_about)
-    super(game, message_type)
+  def initialize(game, players_to, message_type, player_about)
+    @game = game
+    @players_to = players_to
+    @message_type = message_type
     @player_about = player_about
-    @player_to = player_to
-  end
-
-  def call
-    inform_player(@player_to)
   end
 
   def message

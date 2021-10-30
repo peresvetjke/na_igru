@@ -1,11 +1,13 @@
 class NotificationSender
 
-  def initialize(game, message_type = nil)
+  def initialize(game, players_to, message)
     @game = game
-    @message_type = message_type
+    @players_to = players_to
+    @message = message
   end
 
   def call
+    Array[@players_to].each { |player| inform_player(player)  }
   end
 
   def inform_player(player)
@@ -13,6 +15,7 @@ class NotificationSender
   end
 
   def message
+    @message
   end
 
 end

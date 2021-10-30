@@ -8,32 +8,28 @@ class Game < ApplicationRecord
   accepts_nested_attributes_for :game_players
   
   validates :starting_time, presence: true
+  validate  :validate_end_time_more_than_starting
 #  before_validation :before_validation_adjust_passed, on: :update
   after_create :send_notifications, if: -> { self.location.player_locations.count > 0}
   scope :games_player_in, -> (player) { joins(:game_players).where('game_players.player_id = ?', player.id) }
   
-  def starting_time_formatted
-    self.starting_time&.strftime("%H-%M (%d/%m/%Y)")
-  end
-
-  def end_time_formatted
-    self.end_time&.strftime("%H-%M (%d/%m/%Y)")
-  end
-
   def cancel
     self.confirmed = false
     save
-    GameInfoNotificationSender.new(self, :game_cancelled).call
+    GameInfoNotificationSender.new(self, self.players_assigned, :game_cancelled).call
   end
 
   def confirm
     self.confirmed = true
     save
-    GameInfoNotificationSender.new(self, :game_confirmed).call
+    GameInfoNotificationSender.new(self, self.players_assigned, :game_confirmed).call
   end
 
   def send_notifications
-    LocationInfoNotificationSender.new(self).call
+    NotificationSender.new(self, Player.players_with_favorite_location, 'New game created on your favorite location.').call
   end
 
+  def validate_end_time_more_than_starting
+    errors.add :base, message: "End time can't be before the starting time" unless self.end_time > self.starting_time
+  end
 end
