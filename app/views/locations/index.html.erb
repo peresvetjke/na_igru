@@ -21,99 +21,91 @@
 
 <div id="map"></div>
 <script>
+
+  // https://docs.mapbox.com/mapbox-gl-js/example/popup-on-hover/
   mapboxgl.accessToken = 'pk.eyJ1IjoicGVyZXN2ZXRqa2UiLCJhIjoiY2t2OWtwbnV5MDdwMzJ4bWdyeWNsMHdkaCJ9.SrRRsNDbB_0klBwaQSSdYQ';
 const map = new mapboxgl.Map({
-container: 'map',
-style: 'mapbox://styles/mapbox/light-v10',
-center: [-90.96, -0.47],
-zoom: 7.5
+  container: 'map',
+  style: 'mapbox://styles/mapbox/streets-v11',
+  center: [-77.04, 38.907],
+  zoom: 11.15
 });
-
-var locations = [];
-console.log(`at the START - locations ARE ${locations}; locations.length IS ${locations.length}`)
-
+ 
 map.on('load', () => {
-
-  $.ajax({
-  url: "locations.json",
-}).done(function(data) {
-    // locations = data;
-    $(data).each(function() {
-      locations << this
-      console.log(this.title)
-      $(this.games).each(function() {
-        console.log(this.starting_time)
-      });
-      
-      // $(this).each(function() {         console.log (`id: ${this.id}; starting_time: ${this.starting_time}`);        })
-      
-    })
-    
-})
-
-// Add a GeoJSON source with 3 points.
-map.addSource('points', {
-'type': 'geojson',
-'data': {
-'type': 'FeatureCollection',
-'features': [
-{
-'type': 'Feature',
-'properties': {},
-'geometry': {
-'type': 'Point',
-'coordinates': [-91.3952, -0.9145]
-}
-},
-{
-'type': 'Feature',
-'properties': {},
-'geometry': {
-'type': 'Point',
-'coordinates': [-90.3295, -0.6344]
-}
-},
-{
-'type': 'Feature',
-'properties': {},
-'geometry': {
-'type': 'Point',
-'coordinates': [-91.3403, 0.0164]
-}
-}
-]
-}
-});
-// Add a circle layer
-map.addLayer({
-'id': 'circle',
-'type': 'circle',
-'source': 'points',
-'paint': {
-'circle-color': '#4264fb',
-'circle-radius': 8,
-'circle-stroke-width': 2,
-'circle-stroke-color': '#ffffff'
-}
-});
- 
-// Center the map on the coordinates of any clicked circle from the 'circle' layer.
-map.on('click', 'circle', (e) => {
-map.flyTo({
-center: e.features[0].geometry.coordinates
-});
-});
- 
-// Change the cursor to a pointer when the it enters a feature in the 'circle' layer.
-map.on('mouseenter', 'circle', () => {
-map.getCanvas().style.cursor = 'pointer';
-});
- 
-// Change it back to a pointer when it leaves.
-map.on('mouseleave', 'circle', () => {
-map.getCanvas().style.cursor = '';
-});
+  map.addSource('places', {
+    'type': 'geojson',
+    'data': {
+    'type': 'FeatureCollection',
+    'features': [
+    {
+    'type': 'Feature',
+    'properties': {
+    'description':
+    '<strong>Make it Mount Pleasant</strong><p>Make it Mount Pleasant is a handmade and vintage market and afternoon of live entertainment and kids activities. 12:00-6:00 p.m.</p>'
+    },
+    'geometry': {
+    'type': 'Point',
+    'coordinates': [-77.038659, 38.931567]
+    }
+    },
+    {
+    'type': 'Feature',
+    'properties': {
+    'description':
+    '<strong>Mad Men Season Five Finale Watch Party</strong><p>Head to Lounge 201 (201 Massachusetts Avenue NE) Sunday for a Mad Men Season Five Finale Watch Party, complete with 60s costume contest, Mad Men trivia, and retro food and drink. 8:00-11:00 p.m. $10 general admission, $20 admission and two hour open bar.</p>'
+    },
+    'geometry': {
+    'type': 'Point',
+    'coordinates': [-77.003168, 38.894651]
+    }
+    }
+    ]
+    }
+  });
+  // Add a layer showing the places.
+  map.addLayer({
+    'id': 'places',
+    'type': 'circle',
+    'source': 'places',
+    'paint': {
+    'circle-color': '#4264fb',
+    'circle-radius': 6,
+    'circle-stroke-width': 2,
+    'circle-stroke-color': '#ffffff'
+    }
+  });
+   
+  // Create a popup, but don't add it to the map yet.
+  const popup = new mapboxgl.Popup({
+    closeButton: false,
+    closeOnClick: false
+  });
+   
+  map.on('mouseenter', 'places', (e) => {
+    // Change the cursor style as a UI indicator.
+    map.getCanvas().style.cursor = 'pointer';
+     
+    // Copy coordinates array.
+    const coordinates = e.features[0].geometry.coordinates.slice();
+    const description = e.features[0].properties.description;
+     
+    // Ensure that if the map is zoomed out such that multiple
+    // copies of the feature are visible, the popup appears
+    // over the copy being pointed to.
+    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+    }
+     
+    // Populate the popup and set its coordinates
+    // based on the feature found.
+    popup.setLngLat(coordinates).setHTML(description).addTo(map);
+  });
+   
+  map.on('mouseleave', 'places', () => {
+    map.getCanvas().style.cursor = '';
+    popup.remove();
+  });
 });
 
-console.log(`at the END - locations ARE ${locations}; ; locations.length IS ${locations.length}`)
+
 </script>
