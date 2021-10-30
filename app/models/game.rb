@@ -11,6 +11,8 @@ class Game < ApplicationRecord
   validate  :validate_end_time_more_than_starting
 #  before_validation :before_validation_adjust_passed, on: :update
   after_create :send_notifications, if: -> { self.location.player_locations.count > 0}
+  
+  default_scope {where('confirmed IS NOT ?', false) }
   scope :games_player_in, -> (player) { joins(:game_players).where('game_players.player_id = ?', player.id) }
   
   def cancel

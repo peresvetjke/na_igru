@@ -1,9 +1,15 @@
 class LocationsController < ApplicationController
+  respond_to :html, :json
+
   before_action :find_location, only: %i[show edit update update_inline destroy]
   before_action :set_locations, only: %i[index update_inline]
 
   def index
-    
+    respond_with @locations do |format|
+      format.html {render :index}
+      format.json { render :json => @locations, :include => {:games =>  {:only => [:id, :starting_time, :confirmed]}}}
+      # render :json => @programs, :include => {:insurer => {:only => :name}}, :except => [:created_at, :updated_at]
+    end
   end
 
   def favorite

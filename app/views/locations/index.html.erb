@@ -1,3 +1,12 @@
+<%= content_for :head do %>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.js"></script>
+  <style>
+  body { margin: 0; padding: 0; }
+  #map { position: relative; width: 966px; height: 400px }
+  </style>
+<% end %>
+
 <h2>Locations list</h2>
 <%= link_to 'New location', new_location_path, data: {turbolinks: "false"} %> <br>
 <%= render partial: 'shared/errors', locals: {resource: @location} %>
@@ -9,3 +18,102 @@
   <th colspan="3">Actions</th>
   <%= render @locations %>
 </table>
+
+<div id="map"></div>
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoicGVyZXN2ZXRqa2UiLCJhIjoiY2t2OWtwbnV5MDdwMzJ4bWdyeWNsMHdkaCJ9.SrRRsNDbB_0klBwaQSSdYQ';
+const map = new mapboxgl.Map({
+container: 'map',
+style: 'mapbox://styles/mapbox/light-v10',
+center: [-90.96, -0.47],
+zoom: 7.5
+});
+
+var locations = [];
+console.log(`at the START - locations ARE ${locations}; locations.length IS ${locations.length}`)
+
+map.on('load', () => {
+
+  $.ajax({
+  url: "locations.json",
+}).done(function(data) {
+    // locations = data;
+    $(data).each(function() {
+      locations << this
+      console.log(this.title)
+      $(this.games).each(function() {
+        console.log(this.starting_time)
+      });
+      
+      // $(this).each(function() {         console.log (`id: ${this.id}; starting_time: ${this.starting_time}`);        })
+      
+    })
+    
+})
+
+// Add a GeoJSON source with 3 points.
+map.addSource('points', {
+'type': 'geojson',
+'data': {
+'type': 'FeatureCollection',
+'features': [
+{
+'type': 'Feature',
+'properties': {},
+'geometry': {
+'type': 'Point',
+'coordinates': [-91.3952, -0.9145]
+}
+},
+{
+'type': 'Feature',
+'properties': {},
+'geometry': {
+'type': 'Point',
+'coordinates': [-90.3295, -0.6344]
+}
+},
+{
+'type': 'Feature',
+'properties': {},
+'geometry': {
+'type': 'Point',
+'coordinates': [-91.3403, 0.0164]
+}
+}
+]
+}
+});
+// Add a circle layer
+map.addLayer({
+'id': 'circle',
+'type': 'circle',
+'source': 'points',
+'paint': {
+'circle-color': '#4264fb',
+'circle-radius': 8,
+'circle-stroke-width': 2,
+'circle-stroke-color': '#ffffff'
+}
+});
+ 
+// Center the map on the coordinates of any clicked circle from the 'circle' layer.
+map.on('click', 'circle', (e) => {
+map.flyTo({
+center: e.features[0].geometry.coordinates
+});
+});
+ 
+// Change the cursor to a pointer when the it enters a feature in the 'circle' layer.
+map.on('mouseenter', 'circle', () => {
+map.getCanvas().style.cursor = 'pointer';
+});
+ 
+// Change it back to a pointer when it leaves.
+map.on('mouseleave', 'circle', () => {
+map.getCanvas().style.cursor = '';
+});
+});
+
+console.log(`at the END - locations ARE ${locations}; ; locations.length IS ${locations.length}`)
+</script>
